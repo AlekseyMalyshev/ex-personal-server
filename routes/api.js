@@ -102,26 +102,35 @@ router.get('/me', auth.isAuth, (req, res) => {
 
 // the user may update their record
 router.put('/me', auth.isAuth, (req, res) => {
-  let user = new User(req.body);
-  user._id = req.userId;
-  console.log(user);
-  user.encryptPass((err) => {
+  if (req.body.password) {
+    updateUser(req, res, req.body)
+  }
+  else {
+    let user = new User(req.body);
+    user._id = req.userId;
+    console.log(user);
+    user.encryptPass((err) => {
+      if (err) {
+        checkError(err, res);
+      }
+      else {
+        updateUser(req, res, user);
+      }
+    });
+  }
+});
+
+function updateUser(req, res, user) {
+  User.findOneAndUpdate({_id: req.userId}, user, {new: true}, (err, doc) => {
     if (err) {
       checkError(err, res);
     }
     else {
-      User.findOneAndUpdate({_id: req.userId}, user, {new: true}, (err, doc) => {
-        if (err) {
-          checkError(err, res);
-        }
-        else {
-          doc.password = null;
-          res.json(doc);
-        }
-      });
+      doc.password = null;
+      res.json(doc);
     }
   });
-});
+}
 
 // The user may post an item
 // req.body contains a new item
