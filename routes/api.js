@@ -163,7 +163,9 @@ router.put('/item', auth.isAuth, (req, res) => {
 
 // The user may request a single item
 router.get('/item/:itemId', auth.isAuth, (req, res) => {
-  Item.findOne({_id: req.params.itemId}, (err, doc) => {
+  Item.findOne({_id: req.params.itemId})
+    .populate('owner', 'email firstName lastName avatar')
+    .exec((err, doc) => {
     if (err) {
       checkError(err, res);
     }
