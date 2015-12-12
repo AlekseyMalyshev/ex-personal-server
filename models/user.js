@@ -11,12 +11,11 @@ let userSchema = mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
     email: String,
-    address: String,
-    zipcode: String,
+    firstName: String,
+    lastName: String,
     phone: String,
     city: String,
     state: String,
-    avatar: String,
     updated: {type: Date, default: Date.now},
   });
 
