@@ -102,7 +102,7 @@ router.get('/me', auth.isAuth, (req, res) => {
 
 // the user may update their record
 router.put('/me', auth.isAuth, (req, res) => {
-  if (req.body.password) {
+  if (!req.body.password) {
     updateUser(req, res, req.body)
   }
   else {
