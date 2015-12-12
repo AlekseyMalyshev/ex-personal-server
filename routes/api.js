@@ -152,6 +152,21 @@ router.put('/item', auth.isAuth, (req, res) => {
   });
 });
 
+// The user may request a single item
+router.get('/item/:itemId', auth.isAuth, (req, res) => {
+  Item.findOne({_id: req.params.itemId, owner: req.userId}, (err, doc) => {
+    if (err) {
+      checkError(err, res);
+    }
+    else if (!doc) {
+      checkError('Item not found', res);
+    }
+    else {
+      checkError(err, res, doc);
+    }
+  });
+});
+
 // The user may delete their items
 router.delete('/item/:itemId', auth.isAuth, (req, res) => {
   Item.findOneAndRemove({_id: req.params.itemId, owner: req.userId}, (err, doc) => {
