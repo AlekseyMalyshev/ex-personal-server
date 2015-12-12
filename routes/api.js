@@ -208,7 +208,7 @@ router.get('/items', auth.isAuth, (req, res) => {
 // All items that are marked 'forSale' are returned 
 router.get('/listings', auth.isAuth, (req, res) => {
   Item.find({forSale: true, owner: {$ne: req.userId}}, null, {sort: '-updated'})
-    .populate('owner', 'username email avatar')
+    .populate('owner', 'email firstName lastName avatar')
     .exec((err, items) => {
     if (!err) {
       res.send(items);
@@ -240,7 +240,7 @@ router.delete('/offer/:offerId', auth.isAuth, (req, res) => {
 // The user may request a list of all his offers
 router.get('/offers', auth.isAuth, (req, res) => {
   Offer.find({from: req.userId}, null, {sort: '-updated'})
-    .populate('to', 'username email avatar')
+    .populate('to', 'email firstName lastName avatar')
     .populate('for offer')
     .exec((err, items) => {
     if (!err) {
@@ -255,7 +255,7 @@ router.get('/offers', auth.isAuth, (req, res) => {
 // The user may request a list of all offers to him
 router.get('/offers/tome', auth.isAuth, (req, res) => {
   Offer.find({to: req.userId}, null, {sort: '-updated'})
-    .populate('from', 'username email avatar')
+    .populate('from', 'email firstName lastName avatar')
     .populate('for offer')
     .exec((err, items) => {
     if (!err) {
