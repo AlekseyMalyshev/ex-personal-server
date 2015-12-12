@@ -1,0 +1,26 @@
+{
+  "name": "ex-personal",
+  "version": "1.0.0",
+  "description": "Items Exchange for ionic",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AlekseyMalyshev/ex-personal.git"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "5.0.0"
+  },
+  "author": "Aleksey Malyshev",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.4.1",
+    "mongoose": "^4.2.5",
+    "morgan": "^1.6.1"
+  }
+}
